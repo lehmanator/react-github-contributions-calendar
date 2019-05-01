@@ -43,10 +43,10 @@ class GitHubCalendar extends Component {
 
   // Unfortunately there is no support for CSS modules right now...
   getStyles() {
-    const { fontSize, borderWidth, theme } = this.props;
-    const border = borderWidth
-      ? `${borderWidth} solid ${this.getTheme().grade0}`
-      : "0px";
+    const { fontSize, divider, theme } = this.props;
+    const titleDivider = divider
+      ? `4px solid ${this.getTheme().grade0}`
+      : "none";
     return {
       anchor: {
         color: "inherit"
@@ -68,7 +68,7 @@ class GitHubCalendar extends Component {
       title: {
         marginBottom: "0.5rem",
         paddingBottom: "0.25rem",
-        borderBottom: `${border}`,
+        borderBottom: `${titleDivider}`,
         color: theme.text,
         fontSize: `${Math.round(fontSize * TITLE_SCALE_FACTOR)}px`
       },
@@ -150,7 +150,9 @@ class GitHubCalendar extends Component {
 
     const theme = this.getTheme();
     const textHeight = Math.round(fontSize * LINE_HEIGHT);
-
+    const border = blockBorderWidth
+      ? `${blockBorderWidth} solid ${this.getTheme().grade0}`
+      : "none";
     return blocks
       .map(week =>
         week.map((day, y) => (
@@ -161,7 +163,7 @@ class GitHubCalendar extends Component {
             height={blockSize}
             rx={blockRadius}
             ry={blockRadius}
-            strokeWidth={blockBorderWidth}
+            stroke={border}
             fill={theme[`grade${day.info.intensity}`]}
             data-tip={day.info.count ? this.getTooltipMessage(day) : null}
             key={day.date}
@@ -252,6 +254,7 @@ GitHubCalendar.propTypes = {
   blockBorderWidth: PropTypes.number,
   color: PropTypes.string,
   dateFormat: PropTypes.string,
+  divider: PropTypes.bool,
   fontSize: PropTypes.number,
   titleSize: PropTypes.number,
   fullYear: PropTypes.bool,
@@ -269,6 +272,7 @@ GitHubCalendar.defaultProps = {
   blockBorderWidth: 0,
   color: null,
   dateFormat: "MMM D, YYYY",
+  divider: false,
   fontSize: 12,
   titleSize: 10,
   fullYear: true,
