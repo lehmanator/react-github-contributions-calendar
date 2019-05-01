@@ -224,7 +224,7 @@ class GitHubCalendar extends Component {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width={width}
+                width="100%"
                 height={height}
                 viewBox={`0 0 ${width} ${height}`}
                 textRendering="optimizeLegibility"
