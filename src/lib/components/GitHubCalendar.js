@@ -22,7 +22,6 @@ class GitHubCalendar extends Component {
 
   componentDidMount() {
     const { years, username, fullYear } = this.props;
-
     getGitHubGraphData({
       years,
       username,
@@ -44,8 +43,10 @@ class GitHubCalendar extends Component {
 
   // Unfortunately there is no support for CSS modules right now...
   getStyles() {
-    const { fontSize, theme } = this.props;
-
+    const { fontSize, borderWidth, theme } = this.props;
+    const border = borderWidth
+      ? `${borderWidth} solid ${this.getTheme().grade0}`
+      : "0px";
     return {
       anchor: {
         color: "inherit"
@@ -67,7 +68,7 @@ class GitHubCalendar extends Component {
       title: {
         marginBottom: "0.5rem",
         paddingBottom: "0.25rem",
-        borderBottom: `2px solid ${this.getTheme().grade0}`,
+        borderBottom: `${border}`,
         color: theme.text,
         fontSize: `${Math.round(fontSize * TITLE_SCALE_FACTOR)}px`
       },
@@ -84,7 +85,6 @@ class GitHubCalendar extends Component {
 
   getDimensions() {
     const { blockMargin, blockSize, fontSize } = this.props;
-
     const textHeight = Math.round(fontSize * LINE_HEIGHT);
 
     // Since weeks start on Sunday, there is a good chance that the graph starts
@@ -115,7 +115,7 @@ class GitHubCalendar extends Component {
           title="GitHub profile"
           style={this.getStyles().anchor}
         >
-          @{username} on GitHub
+          @{username}
         </a>
       </div>
     );
@@ -140,7 +140,13 @@ class GitHubCalendar extends Component {
   }
 
   renderBlocks(blocks) {
-    const { blockSize, blockMargin, blockRadius, fontSize } = this.props;
+    const {
+      blockSize,
+      blockMargin,
+      blockRadius,
+      blockBorderWidth,
+      fontSize
+    } = this.props;
 
     const theme = this.getTheme();
     const textHeight = Math.round(fontSize * LINE_HEIGHT);
@@ -155,6 +161,7 @@ class GitHubCalendar extends Component {
             height={blockSize}
             rx={blockRadius}
             ry={blockRadius}
+            strokeWidth={blockBorderWidth}
             fill={theme[`grade${day.info.intensity}`]}
             data-tip={day.info.count ? this.getTooltipMessage(day) : null}
             key={day.date}
@@ -242,10 +249,13 @@ GitHubCalendar.propTypes = {
   blockSize: PropTypes.number,
   blockMargin: PropTypes.number,
   blockRadius: PropTypes.number,
+  blockBorderWidth: PropTypes.number,
   color: PropTypes.string,
   dateFormat: PropTypes.string,
   fontSize: PropTypes.number,
+  titleSize: PropTypes.number,
   fullYear: PropTypes.bool,
+  months: PropTypes.number,
   theme: PropTypes.objectOf(PropTypes.string),
   tooltips: PropTypes.bool,
   username: PropTypes.string.isRequired,
@@ -256,10 +266,13 @@ GitHubCalendar.defaultProps = {
   blockSize: 10,
   blockMargin: 2,
   blockRadius: 0,
+  blockBorderWidth: 0,
   color: null,
   dateFormat: "MMM D, YYYY",
   fontSize: 12,
+  titleSize: 10,
   fullYear: true,
+  months: null,
   theme: DEFAULT_THEME,
   tooltips: true,
   years: [Number(format(new Date(), "YYYY"))]
