@@ -1,10 +1,10 @@
 {
-  "name": "@grubersjoe/github-contributions-calendar",
+  "name": "@samlehman617/react-github-contributions-calendar",
   "version": "0.12.0",
   "license": "MIT",
   "author": "Jonathan Gruber <gruberjonathan@gmail.com>",
   "description": "A React component to display a GitHub contributions graph",
-  "homepage": "https://grubersjoe.github.io/github-contributions-calendar/",
+  "homepage": "https://samlehman.me/react-github-contributions-calendar/",
   "keywords": [
     "react",
     "github",
@@ -15,9 +15,9 @@
   "main": "build/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/grubersjoe/github-contributions-calendar"
+    "url": "https://github.com/samlehman617/react-github-contributions-calendar"
   },
-  "bugs": "https://github.com/grubersjoe/github-contributions-calendar/issues",
+  "bugs": "https://github.com/samlehman617/react-github-contributions-calendar/issues",
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
